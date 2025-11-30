@@ -1,0 +1,222 @@
+<pre style="white-space: pre-wrap; word-wrap: break-word;"><font color="#C01C28"><b>[03:19:06]</b></font> <font color="#26A269"><b>a@aser</b></font>:<font color="#12488B"><b>~</b></font>$ 
+<font color="#C01C28"><b>[03:19:06]</b></font> <font color="#26A269"><b>a@aser</b></font>:<font color="#12488B"><b>~</b></font>$ cd /home/a/ansible_bak &amp;&amp; ansible &apos;web-server-a&apos; -i inventory.ini -m shell -a &quot;curl -s http://localhost:4040/metrics | grep nginx_http_response_count_total&quot; -b
+<font color="#A347BA"><b>[WARNING]: Invalid characters were found in group names but not replaced, use</b></font>
+<font color="#A347BA"><b>-vvvv to see details</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: grafana-public</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: kibana-public</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: bastion</b></font>
+<font color="#A2734C">web-server-a | CHANGED | rc=0 &gt;&gt;</font>
+<font color="#A2734C"># HELP nginx_http_response_count_total Amount of processed HTTP requests</font>
+<font color="#A2734C"># TYPE nginx_http_response_count_total counter</font>
+<font color="#A2734C"><span style="background-color: #90EE90; font-weight: bold;">nginx_http_response_count_total{environment=&quot;production&quot;,method=&quot;GET&quot;,service=&quot;nginx&quot;,status=&quot;200&quot;} 119972</span></font>
+<font color="#A2734C">nginx_http_response_count_total{environment=&quot;production&quot;,method=&quot;GET&quot;,service=&quot;nginx&quot;,status=&quot;404&quot;} 28</font>
+<font color="#A2734C">nginx_http_response_count_total{environment=&quot;production&quot;,method=&quot;POST&quot;,service=&quot;nginx&quot;,status=&quot;404&quot;} 1</font>
+<font color="#C01C28"><b>[03:19:40]</b></font> <font color="#26A269"><b>a@aser</b></font>:<font color="#12488B"><b>~/ansible_bak</b></font>$ cd /home/a/ansible_bak &amp;&amp; ansible &apos;web-server-a&apos; -i inventory.ini -m shell -a &quot;echo &apos;Event time:&apos; &amp;&amp; date &amp;&amp; curl -s http://127.0.0.1/pipeline-test-$(python3 -c &apos;import time; print(int(time.time()))&apos;) &gt; /dev/null &amp;&amp; sleep 3 &amp;&amp; echo &apos;Filebeat offset:&apos; &amp;&amp; sudo grep &apos;access.log&apos; /var/lib/filebeat/registry/filebeat/log.json | tail -1 | python3 -c &apos;import sys,json; print(json.load(sys.stdin)[\&quot;v\&quot;][\&quot;offset\&quot;])&apos;&quot;
+<font color="#A347BA"><b>[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: grafana-public</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: bastion</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: kibana-public</b></font>
+<font color="#A2734C">web-server-a | CHANGED | rc=0 &gt;&gt;</font>
+<font color="#A2734C">Event time:</font>
+<font color="#A2734C"><span style="background-color: #90EE90; font-weight: bold;">Fri Nov 28 00:20:10 UTC 2025</span></font>
+<font color="#A2734C">Filebeat offset:</font>
+<font color="#A2734C">397951</font>
+<font color="#C01C28"><b>[03:20:13]</b></font> <font color="#26A269"><b>a@aser</b></font>:<font color="#12488B"><b>~/ansible_bak</b></font>$  cd /home/a/ansible_bak &amp;&amp; ansible &apos;web-server-a&apos; -i inventory.ini -m shell -a &quot;curl -s http://localhost:4040/metrics | grep nginx_http_response_count_total&quot; -b
+<font color="#A347BA"><b>[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: bastion</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: kibana-public</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: grafana-public</b></font>
+<font color="#A2734C">web-server-a | CHANGED | rc=0 &gt;&gt;</font>
+<font color="#A2734C"># HELP nginx_http_response_count_total Amount of processed HTTP requests</font>
+<font color="#A2734C"># TYPE nginx_http_response_count_total counter</font>
+<font color="#A2734C"><span style="background-color: #90EE90; font-weight: bold;">nginx_http_response_count_total{environment=&quot;production&quot;,method=&quot;GET&quot;,service=&quot;nginx&quot;,status=&quot;200&quot;} 120144</span></font>
+<font color="#A2734C">nginx_http_response_count_total{environment=&quot;production&quot;,method=&quot;GET&quot;,service=&quot;nginx&quot;,status=&quot;404&quot;} 29</font>
+<font color="#A2734C">nginx_http_response_count_total{environment=&quot;production&quot;,method=&quot;POST&quot;,service=&quot;nginx&quot;,status=&quot;404&quot;} 1</font>
+<font color="#C01C28"><b>[03:20:23]</b></font> <font color="#26A269"><b>a@aser</b></font>:<font color="#12488B"><b>~/ansible_bak</b></font>$ cd /home/a/ansible_bak &amp;&amp; ansible &apos;web-server-a&apos; -i inventory.ini -m shell -a &quot;journalctl -u filebeat --since &apos;00:20:00&apos; --until &apos;00:21:00&apos; | tail -10&quot;
+<font color="#A347BA"><b>[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: grafana-public</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: kibana-public</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: bastion</b></font>
+<font color="#A2734C">web-server-a | CHANGED | rc=0 &gt;&gt;</font>
+<font color="#A2734C"><span style="background-color: #90EE90; font-weight: bold;">Nov 28 00:20:22 fhmld5i55gnvnlsipc4p filebeat[6118]: {&quot;log.level&quot;:&quot;info&quot;,&quot;@timestamp&quot;:&quot;2025-11-28T00:20:22.055Z&quot;,&quot;log.logger&quot;:&quot;monitoring&quot;,&quot;log.origin&quot;:{&quot;function&quot;:&quot;github.com/elastic/beats/v7/libbeat/monitoring/report/log.(*reporter).logSnapshot&quot;,&quot;file.name&quot;:&quot;log/log.go&quot;,&quot;file.line&quot;:192},&quot;message&quot;:&quot;Non-zero metrics in the last 30s&quot;,&quot;service.name&quot;:&quot;filebeat&quot;,&quot;monitoring&quot;:{&quot;metrics&quot;:{&quot;beat&quot;:{&quot;cgroup&quot;:{&quot;memory&quot;:{&quot;mem&quot;:{&quot;usage&quot;:{&quot;bytes&quot;:58130432}}}},&quot;cpu&quot;:{&quot;system&quot;:{&quot;ticks&quot;:600},&quot;total&quot;:{&quot;ticks&quot;:2610,&quot;time&quot;:{&quot;ms&quot;:30},&quot;value&quot;:2610},&quot;user&quot;:{&quot;ticks&quot;:2009,&quot;time&quot;:{&quot;ms&quot;:29}}},&quot;handles&quot;:{&quot;limit&quot;:{&quot;hard&quot;:524288,&quot;soft&quot;:524287},&quot;open&quot;:11},&quot;info&quot;:{&quot;ephemeral_id&quot;:&quot;98357cd9-131f-49ff-9bf1-7fd5cf1c5968&quot;,&quot;uptime&quot;:{&quot;ms&quot;:2670036},&quot;version&quot;:&quot;8.19.7&quot;},&quot;memstats&quot;:{&quot;gc_next&quot;:41487642,&quot;memory_alloc&quot;:37334336,&quot;memory_sys&quot;:4194304,&quot;memory_total&quot;:345320776,&quot;rss&quot;:147173376},&quot;runtime&quot;:{&quot;goroutines&quot;:41}},&quot;filebeat&quot;:{&quot;events&quot;:{&quot;active&quot;:32,&quot;added&quot;:121,&quot;done&quot;:121},&quot;harvester&quot;:{&quot;open_files&quot;:1,&quot;running&quot;:1}},&quot;libbeat&quot;:{&quot;config&quot;:{&quot;module&quot;:{&quot;running&quot;:0}},&quot;output&quot;:{&quot;events&quot;:{&quot;acked&quot;:121,&quot;active&quot;:0,&quot;batches&quot;:3,&quot;total&quot;:121},&quot;read&quot;:{&quot;bytes&quot;:36},&quot;write&quot;:{&quot;bytes&quot;:8799,&quot;latency&quot;:{&quot;histogram&quot;:{&quot;count&quot;:189,&quot;max&quot;:7521,&quot;mean&quot;:69.33333333333333,&quot;median&quot;:5,&quot;min&quot;:0,&quot;p75&quot;:5,&quot;p95&quot;:17.5,&quot;p99&quot;:4482.59999999998,&quot;p999&quot;:7521,&quot;stddev&quot;:621.1520530561521}}}},&quot;pipeline&quot;:{&quot;clients&quot;:2,&quot;events&quot;:{&quot;active&quot;:32,&quot;published&quot;:121,&quot;total&quot;:121},&quot;queue&quot;:{&quot;acked&quot;:121,&quot;added&quot;:{&quot;events&quot;:121},&quot;consumed&quot;:{&quot;events&quot;:121},&quot;filled&quot;:{&quot;bytes&quot;:0,&quot;events&quot;:32,&quot;pct&quot;:0.01},&quot;max_bytes&quot;:0,&quot;max_events&quot;:3200,&quot;removed&quot;:{&quot;events&quot;:121}}}},&quot;registrar&quot;:{&quot;states&quot;:{&quot;current&quot;:2,&quot;update&quot;:121},&quot;writes&quot;:{&quot;success&quot;:3,&quot;total&quot;:3}},&quot;system&quot;:{&quot;load&quot;:{&quot;1&quot;:0.11,&quot;15&quot;:0.01,&quot;5&quot;:0.04,&quot;norm&quot;:{&quot;1&quot;:0.055,&quot;15&quot;:0.005,&quot;5&quot;:0.02}}}},&quot;ecs.version&quot;:&quot;1.6.0&quot;}}</span></font>
+<font color="#A2734C">Nov 28 00:20:52 fhmld5i55gnvnlsipc4p filebeat[6118]: {&quot;log.level&quot;:&quot;info&quot;,&quot;@timestamp&quot;:&quot;2025-11-28T00:20:52.055Z&quot;,&quot;log.logger&quot;:&quot;monitoring&quot;,&quot;log.origin&quot;:{&quot;function&quot;:&quot;github.com/elastic/beats/v7/libbeat/monitoring/report/log.(*reporter).logSnapshot&quot;,&quot;file.name&quot;:&quot;log/log.go&quot;,&quot;file.line&quot;:192},&quot;message&quot;:&quot;Non-zero metrics in the last 30s&quot;,&quot;service.name&quot;:&quot;filebeat&quot;,&quot;monitoring&quot;:{&quot;metrics&quot;:{&quot;beat&quot;:{&quot;cgroup&quot;:{&quot;memory&quot;:{&quot;mem&quot;:{&quot;usage&quot;:{&quot;bytes&quot;:59445248}}}},&quot;cpu&quot;:{&quot;system&quot;:{&quot;ticks&quot;:620,&quot;time&quot;:{&quot;ms&quot;:20}},&quot;total&quot;:{&quot;ticks&quot;:2650,&quot;time&quot;:{&quot;ms&quot;:40},&quot;value&quot;:2650},&quot;user&quot;:{&quot;ticks&quot;:2029,&quot;time&quot;:{&quot;ms&quot;:20}}},&quot;handles&quot;:{&quot;limit&quot;:{&quot;hard&quot;:524288,&quot;soft&quot;:524287},&quot;open&quot;:11},&quot;info&quot;:{&quot;ephemeral_id&quot;:&quot;98357cd9-131f-49ff-9bf1-7fd5cf1c5968&quot;,&quot;uptime&quot;:{&quot;ms&quot;:2700036},&quot;version&quot;:&quot;8.19.7&quot;},&quot;memstats&quot;:{&quot;gc_next&quot;:19406962,&quot;memory_alloc&quot;:11705208,&quot;memory_sys&quot;:4194304,&quot;memory_total&quot;:349890488,&quot;rss&quot;:148299776},&quot;runtime&quot;:{&quot;goroutines&quot;:41}},&quot;filebeat&quot;:{&quot;events&quot;:{&quot;active&quot;:32,&quot;added&quot;:120,&quot;done&quot;:120},&quot;harvester&quot;:{&quot;open_files&quot;:1,&quot;running&quot;:1}},&quot;libbeat&quot;:{&quot;config&quot;:{&quot;module&quot;:{&quot;running&quot;:0}},&quot;output&quot;:{&quot;events&quot;:{&quot;acked&quot;:120,&quot;active&quot;:0,&quot;batches&quot;:3,&quot;total&quot;:120},&quot;read&quot;:{&quot;bytes&quot;:30},&quot;write&quot;:{&quot;bytes&quot;:8803,&quot;latency&quot;:{&quot;histogram&quot;:{&quot;count&quot;:192,&quot;max&quot;:7521,&quot;mean&quot;:68.42708333333333,&quot;median&quot;:5,&quot;min&quot;:0,&quot;p75&quot;:6,&quot;p95&quot;:17.349999999999994,&quot;p99&quot;:4381.319999999977,&quot;p999&quot;:7521,&quot;stddev&quot;:616.3221770577135}}}},&quot;pipeline&quot;:{&quot;clients&quot;:2,&quot;events&quot;:{&quot;active&quot;:32,&quot;published&quot;:120,&quot;total&quot;:120},&quot;queue&quot;:{&quot;acked&quot;:120,&quot;added&quot;:{&quot;events&quot;:120},&quot;consumed&quot;:{&quot;events&quot;:120},&quot;filled&quot;:{&quot;bytes&quot;:0,&quot;events&quot;:32,&quot;pct&quot;:0.01},&quot;max_bytes&quot;:0,&quot;max_events&quot;:3200,&quot;removed&quot;:{&quot;events&quot;:120}}}},&quot;registrar&quot;:{&quot;states&quot;:{&quot;current&quot;:2,&quot;update&quot;:120},&quot;writes&quot;:{&quot;success&quot;:3,&quot;total&quot;:3}},&quot;system&quot;:{&quot;load&quot;:{&quot;1&quot;:0.06,&quot;15&quot;:0,&quot;5&quot;:0.03,&quot;norm&quot;:{&quot;1&quot;:0.03,&quot;15&quot;:0,&quot;5&quot;:0.015}}}},&quot;ecs.version&quot;:&quot;1.6.0&quot;}}</font>
+<font color="#C01C28"><b>[03:23:40]</b></font> <font color="#26A269"><b>a@aser</b></font>:<font color="#12488B"><b>~/ansible_bak</b></font>$ cd /home/a/ansible_bak &amp;&amp; ansible elasticsearch-server -i inventory.ini -m shell -a &quot;journalctl -u logstash --since &apos;00:20:00&apos; --until &apos;00:21:00&apos; --no-pager | grep -A10 -B2 &apos;pipeline-test&apos;&quot;
+<font color="#A347BA"><b>[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: kibana-public</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: bastion</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: grafana-public</b></font>
+<font color="#A2734C">elasticsearch-server | CHANGED | rc=0 &gt;&gt;</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:     },</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:            &quot;url&quot; =&gt; {</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:         &quot;original&quot; =&gt; &quot;/pipeline-test-1764289209&quot;</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:     },</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:            &quot;ecs&quot; =&gt; {</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:         &quot;version&quot; =&gt; &quot;8.0.0&quot;</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:     },</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:         &quot;fields&quot; =&gt; {</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:         &quot;logtype&quot; =&gt; &quot;nginx-access&quot;,</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:         &quot;service&quot; =&gt; &quot;nginx&quot;</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:     },</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:          &quot;event&quot; =&gt; {</font>
+<font color="#A2734C"><span style="background-color: #90EE90; font-weight: bold;">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:         &quot;original&quot; =&gt; &quot;127.0.0.1 - - [28/Nov/2025:00:20:10 +0000] \&quot;GET /pipeline-test-1764289209 HTTP/1.1\&quot; 404 162 \&quot;-\&quot; \&quot;curl/7.81.0\&quot;&quot;</span></font></font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:     },</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:           &quot;tags&quot; =&gt; [</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:         [0] &quot;beats_input_codec_plain_applied&quot;</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:     ],</font>
+<font color="#A2734C"><span style="background-color: #90EE90; font-weight: bold;">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:        &quot;message&quot; =&gt; &quot;127.0.0.1 - - [28/Nov/2025:00:20:10 +0000] \&quot;GET /pipeline-test-1764289209 HTTP/1.1\&quot; 404 162 \&quot;-\&quot; \&quot;curl/7.81.0\&quot;&quot;,</span></font></font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:          &quot;agent&quot; =&gt; {</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:                 &quot;name&quot; =&gt; &quot;fhmld5i55gnvnlsipc4p&quot;,</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:                 &quot;type&quot; =&gt; &quot;filebeat&quot;,</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:              &quot;version&quot; =&gt; &quot;8.19.7&quot;,</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:         &quot;ephemeral_id&quot; =&gt; &quot;98357cd9-131f-49ff-9bf1-7fd5cf1c5968&quot;,</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:                   &quot;id&quot; =&gt; &quot;80ae5e59-03ea-4858-91c8-8deff21e9aa3&quot;</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:     },</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:          &quot;input&quot; =&gt; {</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:         &quot;type&quot; =&gt; &quot;log&quot;</font>
+<font color="#A2734C">Nov 28 00:20:14 fhmjmjm8n86d8vgcl7be logstash[17278]:     },</font>
+<font color="#C01C28"><b>[03:27:48]</b></font> <font color="#26A269"><b>a@aser</b></font>:<font color="#12488B"><b>~/ansible_bak</b></font>$ cd /home/a/ansible_bak &amp;&amp; ansible &apos;elasticsearch-server&apos; -i inventory.ini -m shell -a &quot;curl -s &apos;http://localhost:9200/filebeat-*/_search?q=pipeline-test-1764289209&amp;pretty&apos; | head -30&quot; 
+<font color="#A347BA"><b>[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: kibana-public</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: bastion</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: grafana-public</b></font>
+<font color="#A2734C">elasticsearch-server | CHANGED | rc=0 &gt;&gt;</font>
+<font color="#A2734C">{</font>
+<font color="#A2734C">  &quot;took&quot; : 13,</font>
+<font color="#A2734C">  &quot;timed_out&quot; : false,</font>
+<font color="#A2734C">  &quot;_shards&quot; : {</font>
+<font color="#A2734C">    &quot;total&quot; : 3,</font>
+<font color="#A2734C">    &quot;successful&quot; : 3,</font>
+<font color="#A2734C">    &quot;skipped&quot; : 0,</font>
+<font color="#A2734C">    &quot;failed&quot; : 0</font>
+<font color="#A2734C">  },</font>
+<font color="#A2734C">  &quot;hits&quot; : {</font>
+<font color="#A2734C">    &quot;total&quot; : {</font>
+<font color="#A2734C">      &quot;value&quot; : 9,</font>
+<font color="#A2734C">      &quot;relation&quot; : &quot;eq&quot;</font>
+<font color="#A2734C">    },</font>
+<font color="#A2734C">    &quot;max_score&quot; : 22.722317,</font>
+<font color="#A2734C">    &quot;hits&quot; : [</font>
+<font color="#A2734C">      {</font>
+<font color="#A2734C">        &quot;_index&quot; : &quot;filebeat-8.19.7&quot;,</font>
+<font color="#A2734C">        &quot;_id&quot; : &quot;2EnUx5oBOzVNFENj-CKo&quot;,</font>
+<font color="#A2734C">        &quot;_score&quot; : 22.722317,</font>
+<font color="#A2734C">        &quot;_source&quot; : {</font>
+<font color="#A2734C"><span style="background-color: #90EE90; font-weight: bold;">          &quot;timestamp&quot; : &quot;28/Nov/2025:00:20:10 +0000&quot;,</span></font>
+<font color="#A2734C">          &quot;host&quot; : {</font>
+<font color="#A2734C">            &quot;hostname&quot; : &quot;fhmld5i55gnvnlsipc4p&quot;,</font>
+<font color="#A2734C">            &quot;containerized&quot; : false,</font>
+<font color="#A2734C">            &quot;os&quot; : {</font>
+<font color="#A2734C">              &quot;platform&quot; : &quot;ubuntu&quot;,</font>
+<font color="#A2734C">              &quot;codename&quot; : &quot;jammy&quot;,</font>
+<font color="#A2734C">              &quot;name&quot; : &quot;Ubuntu&quot;,</font>
+<font color="#A2734C">              &quot;kernel&quot; : &quot;5.15.0-161-generic&quot;,</font>
+<font color="#C01C28"><b>[03:28:31]</b></font> <font color="#26A269"><b>a@aser</b></font>:<font color="#12488B"><b>~/ansible_bak</b></font>$ cd /home/a/ansible_bak &amp;&amp; ansible &apos;kibana-server&apos; -i inventory.ini -m shell -a &quot;curl -s &apos;http://10.0.2.7:9200/filebeat-*/_search?q=pipeline-test-1764289209&amp;size=1&amp;pretty&apos;&quot;
+<font color="#A347BA"><b>[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: bastion</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: kibana-public</b></font>
+<font color="#A347BA"><b>[WARNING]: Found both group and host with same name: grafana-public</b></font>
+<font color="#A2734C">kibana-server | CHANGED | rc=0 &gt;&gt;</font>
+<font color="#A2734C">{</font>
+<font color="#A2734C">  &quot;took&quot; : 9,</font>
+<font color="#A2734C">  &quot;timed_out&quot; : false,</font>
+<font color="#A2734C">  &quot;_shards&quot; : {</font>
+<font color="#A2734C">    &quot;total&quot; : 3,</font>
+<font color="#A2734C">    &quot;successful&quot; : 3,</font>
+<font color="#A2734C">    &quot;skipped&quot; : 0,</font>
+<font color="#A2734C">    &quot;failed&quot; : 0</font>
+<font color="#A2734C">  },</font>
+<font color="#A2734C">  &quot;hits&quot; : {</font>
+<font color="#A2734C">    &quot;total&quot; : {</font>
+<font color="#A2734C">      &quot;value&quot; : 9,</font>
+<font color="#A2734C">      &quot;relation&quot; : &quot;eq&quot;</font>
+<font color="#A2734C">    },</font>
+<font color="#A2734C">    &quot;max_score&quot; : 23.054413,</font>
+<font color="#A2734C">    &quot;hits&quot; : [</font>
+<font color="#A2734C">      {</font>
+<font color="#A2734C">        &quot;_index&quot; : &quot;filebeat-8.19.7&quot;,</font>
+<font color="#A2734C">        &quot;_id&quot; : &quot;2EnUx5oBOzVNFENj-CKo&quot;,</font>
+<font color="#A2734C">        &quot;_score&quot; : 23.054413,</font>
+<font color="#A2734C">        &quot;_source&quot; : {</font>
+<font color="#A2734C"><span style="background-color: #90EE90; font-weight: bold;">          &quot;timestamp&quot; : &quot;28/Nov/2025:00:20:10 +0000&quot;,</span></font>
+<font color="#A2734C">          &quot;host&quot; : {</font>
+<font color="#A2734C">            &quot;hostname&quot; : &quot;fhmld5i55gnvnlsipc4p&quot;,</font>
+<font color="#A2734C">            &quot;containerized&quot; : false,</font>
+<font color="#A2734C">            &quot;os&quot; : {</font>
+<font color="#A2734C">              &quot;platform&quot; : &quot;ubuntu&quot;,</font>
+<font color="#A2734C">              &quot;codename&quot; : &quot;jammy&quot;,</font>
+<font color="#A2734C">              &quot;name&quot; : &quot;Ubuntu&quot;,</font>
+<font color="#A2734C">              &quot;kernel&quot; : &quot;5.15.0-161-generic&quot;,</font>
+<font color="#A2734C">              &quot;type&quot; : &quot;linux&quot;,</font>
+<font color="#A2734C">              &quot;version&quot; : &quot;22.04.5 LTS (Jammy Jellyfish)&quot;,</font>
+<font color="#A2734C">              &quot;family&quot; : &quot;debian&quot;</font>
+<font color="#A2734C">            },</font>
+<font color="#A2734C">            &quot;name&quot; : &quot;fhmld5i55gnvnlsipc4p&quot;,</font>
+<font color="#A2734C">            &quot;id&quot; : &quot;23000007c6d5696452c2ffbd792cb099&quot;,</font>
+<font color="#A2734C">            &quot;mac&quot; : [</font>
+<font color="#A2734C">              &quot;D0-0D-15-69-64-52&quot;</font>
+<font color="#A2734C">            ],</font>
+<font color="#A2734C">            &quot;ip&quot; : [</font>
+<font color="#A2734C">              &quot;10.0.2.13&quot;,</font>
+<font color="#A2734C">              &quot;fe80::d20d:15ff:fe69:6452&quot;</font>
+<font color="#A2734C">            ],</font>
+<font color="#A2734C">            &quot;architecture&quot; : &quot;x86_64&quot;</font>
+<font color="#A2734C">          },</font>
+<font color="#A2734C">          &quot;log&quot; : {</font>
+<font color="#A2734C">            &quot;offset&quot; : 400275,</font>
+<font color="#A2734C">            &quot;file&quot; : {</font>
+<font color="#A2734C">              &quot;path&quot; : &quot;/var/log/nginx/access.log&quot;</font>
+<font color="#A2734C">            }</font>
+<font color="#A2734C">          },</font>
+<font color="#A2734C">          &quot;@version&quot; : &quot;1&quot;,</font>
+<font color="#A2734C">          &quot;http&quot; : {</font>
+<font color="#A2734C">            &quot;request&quot; : {</font>
+<font color="#A2734C">              &quot;method&quot; : &quot;GET&quot;</font>
+<font color="#A2734C">            },</font>
+<font color="#A2734C">            &quot;version&quot; : &quot;1.1&quot;,</font>
+<font color="#A2734C">            &quot;response&quot; : {</font>
+<font color="#A2734C">              &quot;status_code&quot; : 404,</font>
+<font color="#A2734C">              &quot;body&quot; : {</font>
+<font color="#A2734C">                &quot;bytes&quot; : 162</font>
+<font color="#A2734C">              }</font>
+<font color="#A2734C">            }</font>
+<font color="#A2734C">          },</font>
+<font color="#A2734C">          &quot;url&quot; : {</font>
+<font color="#A2734C">            &quot;original&quot; : &quot;/pipeline-test-1764289209&quot;</font>
+<font color="#A2734C">          },</font>
+<font color="#A2734C">          &quot;ecs&quot; : {</font>
+<font color="#A2734C">            &quot;version&quot; : &quot;8.0.0&quot;</font>
+<font color="#A2734C">          },</font>
+<font color="#A2734C">          &quot;fields&quot; : {</font>
+<font color="#A2734C">            &quot;logtype&quot; : &quot;nginx-access&quot;,</font>
+<font color="#A2734C">            &quot;service&quot; : &quot;nginx&quot;</font>
+<font color="#A2734C">          },</font>
+<font color="#A2734C">          &quot;event&quot; : {</font>
+<font color="#A2734C">            &quot;original&quot; : &quot;127.0.0.1 - - [28/Nov/2025:00:20:10 +0000] \&quot;GET /pipeline-test-1764289209 HTTP/1.1\&quot; 404 162 \&quot;-\&quot; \&quot;curl/7.81.0\&quot;&quot;</font>
+<font color="#A2734C">          },</font>
+<font color="#A2734C">          &quot;tags&quot; : [</font>
+<font color="#A2734C">            &quot;beats_input_codec_plain_applied&quot;</font>
+<font color="#A2734C">          ],</font>
+<font color="#A2734C">          &quot;message&quot; : &quot;127.0.0.1 - - [28/Nov/2025:00:20:10 +0000] \&quot;GET /pipeline-test-1764289209 HTTP/1.1\&quot; 404 162 \&quot;-\&quot; \&quot;curl/7.81.0\&quot;&quot;,</font>
+<font color="#A2734C">          &quot;agent&quot; : {</font>
+<font color="#A2734C">            &quot;name&quot; : &quot;fhmld5i55gnvnlsipc4p&quot;,</font>
+<font color="#A2734C">            &quot;type&quot; : &quot;filebeat&quot;,</font>
+<font color="#A2734C">            &quot;version&quot; : &quot;8.19.7&quot;,</font>
+<font color="#A2734C">            &quot;ephemeral_id&quot; : &quot;98357cd9-131f-49ff-9bf1-7fd5cf1c5968&quot;,</font>
+<font color="#A2734C">            &quot;id&quot; : &quot;80ae5e59-03ea-4858-91c8-8deff21e9aa3&quot;</font>
+<font color="#A2734C">          },</font>
+<font color="#A2734C">          &quot;input&quot; : {</font>
+<font color="#A2734C">            &quot;type&quot; : &quot;log&quot;</font>
+<font color="#A2734C">          },</font>
+<font color="#A2734C">          &quot;source&quot; : {</font>
+<font color="#A2734C">            &quot;address&quot; : &quot;127.0.0.1&quot;</font>
+<font color="#A2734C">          },</font>
+<font color="#A2734C">          &quot;user_agent&quot; : {</font>
+<font color="#A2734C">            &quot;original&quot; : &quot;curl/7.81.0&quot;</font>
+<font color="#A2734C">          },</font>
+<font color="#A2734C">          &quot;@timestamp&quot; : &quot;2025-11-28T00:20:11.451Z&quot;</font>
+<font color="#A2734C">        }</font>
+<font color="#A2734C">      }</font>
+<font color="#A2734C">    ]</font>
+<font color="#A2734C">  }</font>
+<font color="#A2734C">}</font>
+</pre>
